@@ -4,6 +4,7 @@
 	// print_r($cats);
 	// print_r($gens);
 	// print_r($langs);
+	// print_r($videos);
 	// exit;
 ?>
 <head>
@@ -242,7 +243,7 @@
 									</div>
 								</div>
 								<div class="col-md-1 col-sm-12 col-xs-12 master-pad">
-									<div class="form-group"> <input class="btn btn-block input-lg btn-color" style="font-weight:bold;" type="submit" value="Submit"></a> </div>
+									<div class="form-group"> <input class="btn btn-block input-lg btn-color" style="font-weight:bold;" type="button" value="Search" onclick="get_search_data()"> </div>
 								</div>
 							</div>
 						</div>
@@ -251,9 +252,28 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		function get_search_data(){
+			alert('ajax search');
+			// var new_request = new XMLHttpRequest();
+			// new_request.open('GET','/ajaxSearching');
+			// new_request.onreadystatechange = function(){
+			// 	if(this.status == 200 && this.readyState == 4){
+			// 		console.log(this.responseText);
+			// 	}
+			// }
+			// new_request.send();
+
+			$.ajax({url: "{{asset('/ajax')}}", success: function(result){
+			  // $("#div1").html(result);
+			  // console.log(result);
+			  alert(result);
+			}});
+		}
+	</script>
 	<!-- /.container -->
-	<div class="container-fluid">
 			<!-- Mobile Version Start -->
+	<div class="container-fluid">
 				<div class="col-md-12 hidden-md hidden-lg hidden-sm" style="padding-top:10px;">
 					<div class="clearfix">
 						<div class="clearfix">
@@ -514,8 +534,8 @@
 												<div class="product_sale"> <span>-7%</span> </div>
 											</div>
 											<div class="product_content">
-											<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-											<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> </div>
+											<h4><a href="#" tabindex="-1">{{$books[$dummy_len]->book_title}}</a></h4>
+											<span class="current_price">{{$books[$dummy_len]->book_description}}</span> </div>
 										</div>
 									</div>
 									<?php $dummy_len++;
@@ -538,12 +558,23 @@
 					<div id="myCarousel1" class="carousel slide" data-ride="carousel"> 
 								<!-- Wrapper for slides -->
 						<div class="carousel-inner">
-							<div class="item active">
+							<!-- Main Desktop While Start -->
+								<?php 
+									$i=0;
+							        $per_div = 6;
+							        $len = sizeof($videos);
+							        $dummy_len = 0;
+							        $limit = ($len/$per_div);
+							        while($i < $limit){ 
+							    ?>
+							<div class="item" id="videoitem{{$dummy_len}}">
 								<div class="row">
+									<?php $j=0; ?>
+									<?php while(($j < $per_div) && ($dummy_len < $len)){ ?>
 									<div class="col-lg-2">
 										<div class="single_product">
 											<div class="product_thumb">
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video1.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video11.jpg')}}" alt=""></a>
+												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/'.$videos[$dummy_len]->video_primary_image)}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/'.$videos[$dummy_len]->video_secondary_image)}}" alt=""></a>
 												<div class="product_action">
 													<div class="hover_action">
 														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
@@ -556,313 +587,24 @@
 														</div>
 													</div>
 												</div>
-												<div class="quick_button"> <a class="btn btn-block btn-quick"  data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
+												<div class="quick_button"> <button class="btn btn-block btn-quick"  data-toggle="modal" data-target="#videoModal" onclick="get_dynamic_video(this.value)" href="#" tabindex="-1" value="<?php echo $videos[$dummy_len]->video_file.','.$videos[$dummy_len]->video_ogg_file; ?>">View Now</button> 
 												</div>
 												<div class="product_sale"> <span>-7%</span> </div>
 											</div>
 											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wishlistreless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
+												<h4><a href="#" tabindex="-1">{{$videos[$dummy_len]->video_title}}</a></h4>
+												<span class="current_price">{{$videos[$dummy_len]->video_description}}</span> 
 											</div>
 										</div>
 									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video2.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video22.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video3.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video33.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video1.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video11.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video2.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video22.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video3.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video33.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
+									<?php $dummy_len++;
+									$j++;} ?>
 								</div>
 							</div>
-							<div class="item">
-								<div class="row">
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video1.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video11.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video2.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video22.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span></div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video3.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video33.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video1.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video11.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> 
-														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> 
-													<a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> 
-												</div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video2.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video22.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> <a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> <a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> </div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-2">
-										<div class="single_product">
-											<div class="product_thumb"> 
-												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video3.jpg')}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/video33.jpg')}}" alt=""></a>
-												<div class="product_action">
-													<div class="hover_action"> <a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
-														<div class="action_button">
-															<ul>
-																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
-																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<div class="quick_button"> <a class="btn btn-block btn-quick" data-toggle="modal" data-target="#videoModal" href="#" tabindex="-1">View Now</a> </div>
-												<div class="product_sale"> <span>-7%</span> </div>
-											</div>
-											<div class="product_content">
-												<h4><a href="#" tabindex="-1">Beats Solo Wireless</a></h4>
-												<span class="current_price">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							 <?php  
+							    ++$i;
+							} ?>
+							<!-- Main While Desktop End -->
 						</div>
 						<!-- Left and right controls --> 
 						<a class="left carousel-control" href="#myCarousel1" data-slide="prev"><img src="{{ asset('public/assets/img/arrow-left.png')}}" width="45" height="91"></a> <a class="right carousel-control" href="#myCarousel1" data-slide="next"> <img src="{{ asset('public/assets/img/arrow-right.png')}}" width="45" height="91"></a> 
@@ -1321,12 +1063,14 @@
 					<h4 class="modal-title">Video</h4>
 				</div>
 				<div class="modal-body">
-					<video id="videoPlayer" width="100%" controls ontimeupdate="getCurrentTime(this)" poster="video/thumb.jpg">
-						<source src="{{ asset('public/assets/videos/t1.mp4')}}" type="video/mp4">
-						<source src="{{ asset('public/assets/videos/t1.ogg')}}" type="video/ogg">
+					<!--<video id="videoPlayer" width="100%" controls ontimeupdate="getCurrentTime(this)" poster="video/thumb.jpg">
+						<source id="mp4Vid" src="" type="video/mp4">
+						 <source id="oggVid" src="http://localhost/crest/public/assets/videos/t1.ogg" type="video/ogg"> --
 					  	Your browser does not support the video tag.
 					</video>
-					<div><span id="videoCurrentTime"></span></div>
+
+					<div><span id="videoCurrentTime"></span></div>-->
+					<iframe width="100%" height="300px" id="videoPlayer" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1334,6 +1078,22 @@
 		    </div>
 		</div>
 	</div>
+	<script>
+		
+	    function get_dynamic_video(videoFile){
+	    	alert(videoFile);
+	    	files_names_array = videoFile.split(',');
+	    	alert(files_names_array);
+	    	var path_info1 = "{{asset('public/assets/videos')}}"+"/"+files_names_array[0];
+	    	// var path_info2 = "{{asset('public/assets/videos')}}"+"/"+files_names_array[1];
+	    	// $('#mp4Vid').attr('src',path_info1);
+	    	// $('#oggVid').attr('src',path_info2);
+	    	document.getElementById("videoPlayer").src = path_info1;
+	    	// document.getElementById("oggVid").src = path_info2;
+	    	// document.getElementById("videoFile").load();
+
+	    }
+	</script>
 	<!--Video Modal popup Start here-->
 	<!-- PDF Start Here-->
 	<div style='display: block'>
@@ -1541,7 +1301,7 @@
 
 	                ,lightbox : ".book2-trigger"
 	                ,lightboxClass : "lightbox-pdf"
-	                ,centeredWhenClosed : false
+	                ,centeredWhenClosed : true
 	                ,hardcovers : true
 	                ,curl: false
 	                ,toolbar: "lastLeft, left, currentPage, right, lastRight, find, toc, zoomin, zoomout, flipsound, fullscreen, thumbnails"
@@ -1587,6 +1347,9 @@
                 	$(elem).wowBook( books[elem] );
                     book=$.wowBook(elem);
                 }
+
+                // C:\Program Files\Sublime Text 3
+
                 book.opts.onHideLightbox = function(){
                     // setTimeout( function(){ book.destroy(); }, 1000); 
                     window.location.assign("{{ asset('/index') }}");
@@ -1876,6 +1639,8 @@
 		}
 	</script>
 	<script type="text/javascript">
+
+		
 		$(document).ready(function(){
 			$('#videoModal').modal({
 			show: false
@@ -1888,12 +1653,12 @@
 		
 		$(document).ready(function () {
 		   $("body").on("contextmenu",function(e){
-		     return false;
+		     return true;
 		   });
 
 		   $("#item0").addClass('active');	   
+		   $("#videoitem0").addClass('active');	   
 		});
-
 
 	</script>    
 </body>
