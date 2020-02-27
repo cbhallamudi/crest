@@ -1,0 +1,198 @@
+<div class="container-fluid">
+		<div class="row">
+			<div class="banner-box" style="padding-top:18%; padding-bottom:12%;">
+				<div class="col-md-11 col-md-offset-1">
+					<h2 class="col-md-12 col-lg-12" style="color:#fff; padding-bottom:10px;"><span style="font-size:34px; color:#fff;"><strong>HIPPO - Smart way of utilizing digital assets </strong></span> <br>
+				 	for the smart people</h2>
+				</div>
+				<form action="{{asset('/searchItems')}}" method="POST" enctype="multipart/form-data">
+					{{ csrf_field() }}
+					<div class="col-md-offset-1">
+						<div class="infbox">
+							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 master-pad">
+								<div class="form-group">
+									<select class="form-control input-lg" name="language" id="language">
+										<option selected="selected" value="-1" selected>--Select Language--</option>
+									
+									<?php foreach ($langs as $lang): ?>
+										<option value="{{$lang->language_id}}">{{$lang->language_title}}</option>
+									<?php endforeach ?>	
+									
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-6 col-xs-6 master-pad">
+								<div class="form-group">
+									<select class="form-control input-lg" name="searchType" id="searchType">
+										<option value="-1" selected>--Select File Type--</option>
+										<option value="1">All </option>
+										<option value="2">Books </option>
+										<option value="3">Videos </option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-6 col-xs-6 master-pad">
+								<div class="form-group">
+									<select class="form-control input-lg" name="subject" id="category" onchange="get_genres(this.value)">
+										
+										<option selected value="-1">--Select Category--</option>
+									<?php foreach ($cats as $cat): ?>
+										<option value="{{$cat->category_id}}">{{$cat->category_title}}</option>
+									<?php endforeach ?>	
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-6 col-xs-6 master-pad">
+								<div class="form-group">
+									<div style="position:relative; overflow:hidden;">
+										<select class="form-control input-lg" name="subject1" id="genre">
+											<option selected value="-1">--Select Genre--</option>
+										<!-- <?php foreach ($cats as $cat): ?>
+											<option value="{{$cat->category_id}}">{{$cat->category_title}}</option>
+										<?php endforeach ?> -->
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-1 col-sm-6 col-xs-6 master-pad">
+								<div class="form-group">
+									<div style="position:relative; overflow:hidden;">
+										<input id="startDate" name="startDate" Placeholder="From" type="text" class="form-control input-lg" />
+										<div class="line-box1"></div>
+									</div>
+									<!--<div class='input-group date' id='datetimepicker1'>
+									<input type='text' class="form-control input-lg" /><div class="line-box"></div>
+									<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span> </span> </div>--> 
+								</div>
+							</div>
+							<div class="col-md-1 col-sm-6 col-xs-6 master-pad">
+								<div class="form-group">
+									<div style="position:relative; overflow:hidden;">
+										<input class="form-control input-lg" id="endDate" Placeholder="To" name="endDate" type="text" />
+										<div class="line-box1"></div>
+									</div>
+								</div>
+								<!--<div class='input-group date' id='datetimepicker2'>
+								<input type='text' class="form-control input-lg" /><div class="line-box"></div>
+								<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span> </span> </div>--> 
+							</div>
+							<!-- <button onclick="getDate()">Get Date</button> -->
+						</div>
+						<div class="col-md-12">
+							<div class="search-box-banner master-pad">
+								<div class="col-md-6 master-pad">
+									<div class="form-group" style="margin-bottom: 5px !important;">
+										<div class="jQueryInputTags defaultOptions">
+											<input class="form-control input-lg" type="text" placeholder="Keywords" list="keywordsOpt" name="keywords" id="keywords" oninput="showResult(this.value)">
+											 <!-- onkeyup="showResult(this.value)" -->
+											<input type="hidden" name="keyValue" id="keyValue"><br>
+											<!-- <div id="livesearch"></div> -->
+											<datalist id="keywordsOpt">
+											  <option value="Internet Explorer">
+											</datalist>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3 master-pad">
+									<div class="form-group" style="margin-bottom: 5px !important;">
+										<div style="position:relative; overflow:hidden;">
+											<input class="form-control input-lg" type="text" placeholder="Author" name="author" id="author">
+											<div class="line-box"></div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1 col-sm-12 col-xs-12 master-pad">
+									<div class="form-group"> <input class="btn btn-block input-lg btn-color" style="font-weight:bold;" type="button" value="Search" onclick="get_search_data()"> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- <button onclick="getKeyWords()">Get Keys</button> -->
+	<script type="text/javascript">
+		function getKeyWords() {
+			alert($("#keyValue").val());
+		}
+	</script>
+	<script>
+
+		function showResult(str) {
+		  if (str.length==0) {
+		    document.getElementById("livesearch").innerHTML="";
+		    document.getElementById("livesearch").style.border="0px";
+		    return;
+		  }
+		  if (window.XMLHttpRequest) {
+		    // code for IE7+, Firefox, Chrome, Opera, Safari
+		    xmlhttp=new XMLHttpRequest();
+		  } else {  // code for IE6, IE5
+		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		  xmlhttp.onreadystatechange=function() {
+		    if (this.readyState==4 && this.status==200) {
+			    serData = JSON.parse(this.responseText);
+			    document.getElementById("keywordsOpt").innerHTML="";
+			    for(serd = 0;serd < serData.length;serd++){
+			    	$('#keywordsOpt').append("<option value='"+serData[serd].book_title+"'>");
+			    }
+		      
+		      console.log(this.responseText);
+		    }
+		  }
+		  xmlhttp.open("GET","{{asset('/ajaxGetKeywords')}}"+"/"+str,true);
+		  xmlhttp.send();
+		}
+
+
+		function get_search_data(){
+			category_search_id = $('#category').val();
+			genre_search_id = $('#genre').val();
+			language_search_id = $('#language').val();
+			searchType_search_id = $('#searchType').val();
+
+			search_criterion = category_search_id+"/"+genre_search_id+"/"+language_search_id+"/"+searchType_search_id;
+
+			console.log(search_criterion);
+			console.log(typeof(category_search_id));
+			console.log("{{asset('/ajaxcrit')}}"+"/"+search_criterion);
+
+			var get_sdata = new XMLHttpRequest();
+			get_sdata.open("GET","{{asset('/ajaxcrit')}}"+"/"+search_criterion);
+			get_sdata.onreadystatechange = function(){
+				if(this.status == 200 && this.readyState == 4){
+					console.log(this.responseText);
+					console.log(JSON.parse(this.responseText));
+			  		window.location.assign('{{asset("/ajaxSearchItems")}}'+'/'+this.responseText);
+				}
+			}
+			get_sdata.send();
+		}
+		function get_genres(catId){
+			// alert('ajax search');
+
+
+  		 	var get_gen = new XMLHttpRequest();
+  		 	get_gen.open("GET","{{asset('/ajaxGetGens')}}"+"/"+catId);
+  		 	get_gen.onreadystatechange = function(){
+  		 		if(this.status == 200 && this.readyState == 4){
+  		 			final_gens = JSON.parse(this.responseText);
+  		 			$("#genre").html('<option selected value="-1">--Select Genre--</option>');
+  		 			for(gen = 0;gen < final_gens.length;gen++){
+  		 				$("#genre").append('<option value="'+final_gens[gen].genre_id+'">'+final_gens[gen].genre_title+'</option>');
+  		 			}
+  		 			console.log(final_gens);
+  		 			// alert(final_gens.length);
+  		 		}
+  		 	}
+  		 	get_gen.send();
+
+		}
+		// function getDate(){	
+		// 	alert($('#startDate').val());  
+		// 	alert(($('#startDate').val()).split('/'));
+		// 	alert(($('#startDate').val()).split('/')[2]+"-"+($('#startDate').val()).split('/')[1]+"-"+($('#startDate').val()).split('/')[0])
+		// }
+	</script>
