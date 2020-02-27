@@ -1,0 +1,120 @@
+<div class="col-md-12 hidden-xs hidden-sm" style="padding-top:10px;">
+			<div class="clearfix">
+				<h2 class="col-md-12">Books</h2>
+				<div class="col-md-12">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel"> 
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner">
+
+							<!-- Foreach Start -->
+							<?php 
+								$i=0;
+						        $per_div = 6;
+						        $len = sizeof($books);
+						        $dummy_len = 0;
+						        $limit = ($len/$per_div);
+						        while($i < $limit){ 
+						    ?>
+							<div class="item" id="item{{$dummy_len}}">
+								<div class="row">
+									<?php $j=0; ?>
+									<?php while(($j < $per_div) && ($dummy_len < $len)){ ?>
+									<div class="col-lg-2">
+										<div class="single_product">
+											<div class="product_thumb"> 
+												<a class="primary_img" href="#" tabindex="-1"><img src="{{ asset('public/assets/img/'.$books[$dummy_len]->book_primary_image)}}" alt=""></a> <a class="secondary_img" href="#" tabindex="-1"><img src="{{ asset('public/assets/img/'.$books[$dummy_len]->book_secondary_img)}}" alt=""></a>
+												<div class="product_action">
+													<div class="hover_action"> 
+														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
+														<div class="action_button">
+															<ul>
+																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
+																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
+															</ul>
+														</div>
+													</div>
+												</div>
+												<div class="quick_button"> <button class="btn btn-block btn-quick book2-trigger" id="book2-trigger" href="#" value="<?php echo $books[$dummy_len]->book_file; ?> " tabindex="-1">Read Now</button> 
+												</div>
+												<div class="product_sale"> <span>-7%</span> </div>
+											</div>
+											<div class="product_content">
+											<h4><a href="#" tabindex="-1">{{$books[$dummy_len]->book_title}}</a></h4>
+											<span class="current_price">{{$books[$dummy_len]->book_description}}</span> </div>
+										</div>
+									</div>
+									<?php $dummy_len++;
+									$j++;} ?>
+								</div>
+							</div>
+							 <?php  
+							    ++$i;
+							} ?>
+							<!-- end foreach -->
+						</div>
+						<!-- Left and right controls --> 
+						<a class="left carousel-control" href="#myCarousel" data-slide="prev"><img src="{{ asset('public/assets/img/arrow-left.png')}}" width="45" height="91"></a> <a class="right carousel-control" href="#myCarousel" data-slide="next"> <img src="{{ asset('public/assets/img/arrow-right.png')}}" width="45" height="91"></a> 
+					</div>
+				</div>
+			</div>
+			<div class="clearfix">
+				<h2 class="col-md-12">Videos</h2>
+				<div class="col-md-12">
+					<div id="myCarousel1" class="carousel slide" data-ride="carousel"> 
+								<!-- Wrapper for slides -->
+						<div class="carousel-inner">
+							<!-- Main Desktop While Start -->
+								<?php 
+									$i=0;
+							        $per_div = 6;
+							        $len = sizeof($videos);
+							        $dummy_len = 0;
+							        $limit = ($len/$per_div);
+							        while($i < $limit){ 
+							    ?>
+							<div class="item" id="videoitem{{$dummy_len}}">
+								<div class="row">
+									<?php $j=0; ?>
+									<?php while(($j < $per_div) && ($dummy_len < $len)){ ?>
+									<div class="col-lg-2">
+										<div class="single_product">
+											<div class="product_thumb">
+												<a class="primary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/'.$videos[$dummy_len]->video_primary_image)}}" alt=""></a> <a class="secondary_img" href="javascript:void(0)" tabindex="-1"><img src="{{ asset('public/assets/img/'.$videos[$dummy_len]->video_secondary_image)}}" alt=""></a>
+												<div class="product_action">
+													<div class="hover_action">
+														<a href="#" tabindex="-1"><i class="fa fa-plus"></i></a>
+														<div class="action_button">
+															<ul>
+																<li><a title="add to cart" href="#" tabindex="-1"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
+																<li><a href="#" title="Add to Wishlist" tabindex="-1"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+																<li><a href="#" title="Add to Compare" tabindex="-1"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
+															</ul>
+														</div>
+													</div>
+												</div>
+												<div class="quick_button"> <button class="btn btn-block btn-quick"  data-toggle="modal" data-target="#videoModal" onclick="get_dynamic_video(this.value)" href="#" tabindex="-1" value="<?php echo $videos[$dummy_len]->video_file.','.$videos[$dummy_len]->video_ogg_file; ?>">View Now</button> 
+												</div>
+												<div class="product_sale"> <span>-7%</span> </div>
+											</div>
+											<div class="product_content">
+												<h4><a href="#" tabindex="-1">{{$videos[$dummy_len]->video_title}}</a></h4>
+												<span class="current_price">{{$videos[$dummy_len]->video_description}}</span> 
+											</div>
+										</div>
+									</div>
+									<?php $dummy_len++;
+									$j++;} ?>
+								</div>
+							</div>
+							 <?php  
+							    ++$i;
+							} ?>
+							<!-- Main While Desktop End -->
+						</div>
+						<!-- Left and right controls --> 
+						<a class="left carousel-control" href="#myCarousel1" data-slide="prev"><img src="{{ asset('public/assets/img/arrow-left.png')}}" width="45" height="91"></a> <a class="right carousel-control" href="#myCarousel1" data-slide="next"> <img src="{{ asset('public/assets/img/arrow-right.png')}}" width="45" height="91"></a> 
+					</div>
+				</div>
+			</div>
+		</div>
